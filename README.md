@@ -1,16 +1,16 @@
-# 🛡️ Pluralsight Hands-On Lab — Hands-On Project
+# 🛡️ Network Security: Implementing Basic Network Security
 
 > Hands-on cybersecurity lab from Pluralsight with implementation notes and outcomes.
 
 ![Platform](https://img.shields.io/badge/platform-Pluralsight-39ff7a?style=flat-square)
 ![Status](https://img.shields.io/badge/status-complete-39ff7a?style=flat-square)
-![Date](https://img.shields.io/badge/date-2026-05-20-blue?style=flat-square)
+![Date](https://img.shields.io/badge/date-2026--05--20-blue?style=flat-square)
 
 ---
 
 ## 📌 Overview
 
-This repository documents my hands-on completion of **Pluralsight Hands-On Lab — Hands-On Project** on **Pluralsight**.
+This repository documents my hands-on completion of **Pluralsight Hands-On Lab — Network Security: Implementing Basic Network Security** on **Pluralsight**.
 It includes the methodology I followed, tools I used, evidence I captured, and the skills I demonstrated.
 
 **Lab URL:** https://app.pluralsight.com/hands-on/labs/09462adf-0dc2-4eac-94ba-11949025122c?originUrl=https%3A%2F%2Fapp.pluralsight.com%2Fhands-on
@@ -20,52 +20,49 @@ It includes the methodology I followed, tools I used, evidence I captured, and t
 ## 🎯 Objectives
 
 - Complete the guided hands-on lab from start to finish
-- Demonstrate practical application of the security concepts taught
-- Configure and validate the security control or detection
+- Demonstrate endpoint threat detection and triage
+- Use network traffic PCAP to identify IoC
 - Document the process for future reference and portfolio
 
 ---
 
 ## 🧰 Tools & Technologies
 
-`Pluralsight Hands-On Sandbox` · `Cloud console (Azure / AWS / GCP)` · `PowerShell / Bash` · `Browser developer tools`
+`Pluralsight Hands-On Sandbox` · `Wireshark` · `VirusTotal`  
 
 ---
 
 ## 🧠 Security Concepts Demonstrated
 
-- Cloud security configuration
-- Identity & access management
-- Logging and monitoring
-- Detection engineering
-
----
-
-## 🏗️ Architecture / Lab Environment
-
-> See `diagrams/architecture.md` for a description of the lab setup.
-> Add a diagram image at `diagrams/architecture.png` (you can draw one in [draw.io](https://app.diagrams.net/) or [Excalidraw](https://excalidraw.com/) for free).
-
-![Architecture](diagrams/architecture.png)
+- Analyze network traffic to identify malicious activity amongst normal legitimate traffic and find the victim host
+- Find the victim host to quarantine
 
 ---
 
 ## 🪜 Walkthrough
-
+<!--
 > Replace this section with your actual step-by-step walkthrough.
 > Use the placeholders below as a starting structure.
-
+-->
 ### Step 1 — Setup & Recon
-Describe how you set up the environment and what initial reconnaissance you performed.
+Loaded network traffic capture into Wireshark.
 
-### Step 2 — Investigation / Exploitation
-Describe the main work of the lab — the queries you ran, exploits you tried, or controls you configured.
+### Step 2 — Investigation & Detection
 
-### Step 3 — Validation
-Describe how you confirmed the work was correct (alerts fired, exploit succeeded, control blocked the attack, etc).
+The endpoint became infected when the user clicked a Microsoft Word macro.
+
+> Filtered PCAP for TLS handshakes to find an anomalous client/server connection.
+```
+tls.handshake.type eq 1
+```
+### Step 3 — Analyze
+> Found suspicious .dll file being downloaded.
+> > Extracted malicious file from Wireshark.
+> > Analyzed file in sandboxed environment & VirusTotal.
+> > Malware attempted to call out to control server.
 
 ### Step 4 — Cleanup & Reflection
-Describe how you ended the lab and what you'd do differently next time.
+Identified compromised endpoint to quarantine
 
 ### 📝 My Lab Notes
 
@@ -79,23 +76,22 @@ Used Wireshark to find IoC. Filtered for TLS handshakes. Extracted the malicious
 
 ## 📸 Screenshots
 
-> Drop matching PNG/JPG files into the `screenshots/` folder using the filenames below.
 
 ### Lab Environment
 
-> Lab environment overview
+> Following HTTP Stream & Find Executable
 
 ![Lab Environment](screenshots/lab-environment.png)
 
-### Configuration
+### Anomalous Traffic
 
 > Key configuration step
 
 ![Configuration](screenshots/configuration.png)
 
-### Validation
+### Infected Host
 
-> Validating the control works
+> Mapping victim IP address to hostname to quarantine
 
 ![Validation](screenshots/validation.png)
 
@@ -111,9 +107,8 @@ Used Wireshark to find IoC. Filtered for TLS handshakes. Extracted the malicious
 
 | ID | Tactic / Technique | How it appears in this lab |
 |----|--------------------|----------------------------|
-| `TA0006` | Credential Access | Common credential attack patterns covered in lab |
-| `TA0007` | Discovery | Resource enumeration techniques |
-| `TA0005` | Defense Evasion | Concepts around detecting evasion attempts |
+| `T1574` | Hijack Execution Flow: DLL | Dridex can abuse legitimate Windows executables to side-load malicious DLL files |
+| `T1071` | Application Layer Protocol: Web Protocols | Dridex used POST requests and HTTPS for C2 communications. |
 
 ---
 
@@ -125,38 +120,19 @@ Used Wireshark to find IoC. Filtered for TLS handshakes. Extracted the malicious
 
 ---
 
-## 🚨 Common Mistakes I Avoided (or Made)
-
-- _Add 2–3 mistakes you ran into and how you solved them. Recruiters love this section — it shows reflection._
-
----
-
 ## 🛠️ Skills Gained
 
 - Pluralsight Hands-On Sandbox
 - Cloud console (Azure / AWS / GCP)
-- PowerShell / Bash
-- Browser developer tools
-- Cloud security configuration
-- Identity & access management
-- Logging and monitoring
-
----
-
-## 📚 Suggested Next Projects
-
-- Replicate the lab in your own free-tier cloud account
-- Add monitoring/alerting on top of the lab outcome
-- Take a related Pluralsight skill assessment
-- Build a more complex lab combining these skills
+- Wireshark 
+- VirusTotal
 
 ---
 
 ## 💼 Resume Bullets
 
-> Copy/paste these straight into your resume:
 
-- Completed Pluralsight hands-on cybersecurity lab: Pluralsight Hands-On Lab
+- Completed Pluralsight hands-on cybersecurity lab: Network Security: Implementing Basic Network Security
 - Applied lab concepts in a real cloud environment with documented outcomes
 - Built portfolio writeup with screenshots, configuration notes, and lessons learned
 
@@ -184,5 +160,3 @@ I'm **Jonathan Luzader**, a cybersecurity student building public proof-of-skill
 MIT — see [LICENSE](LICENSE).
 
 ---
-
-> 🛠️ Generated with [Portfolio Forge](https://github.com/) — a free PWA that turns lab URLs into GitHub portfolio repos.
